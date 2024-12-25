@@ -11,4 +11,5 @@ com\mycompany\tiendalibros\TiendaLibros.class
 persistencia\exceptions\NonexistentEntityException.class
 persistencia\exceptions\PreexistingEntityException.class
 persistencia\ControladoraPersistencia.class
+gui\LibroForm$2.class
 persistencia\exceptions\IllegalOrphanException.class

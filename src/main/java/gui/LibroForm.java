@@ -1,4 +1,3 @@
-
 package gui;
 
 import java.time.LocalDate;
@@ -9,20 +8,21 @@ import javax.swing.JOptionPane;
 import logica.CategoriasLibro;
 import logica.Libro;
 import logica.LibroRepository;
-
+import logica.Purpose;
 
 public class LibroForm extends javax.swing.JDialog {
 
     DefaultComboBoxModel<CategoriasLibro> modeloCategorias;
     LibroRepository libroRepo;
-    
-    public LibroForm(java.awt.Frame parent, boolean modal) {
+    private Purpose purpose;
+
+    public LibroForm(java.awt.Frame parent, boolean modal, Purpose purpose) {
         super(parent, modal);
+        this.purpose = purpose;
         modeloCategorias = new DefaultComboBoxModel<>();
         libroRepo = new LibroRepository();
         initComponents();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -195,38 +195,55 @@ public class LibroForm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
-        // TODO add your handling code here:
-        if(!txtId.getText().isBlank() && !txtTitulo.getText().isBlank() && 
-                !txtAutor.getText().isBlank() && !txtPrecio.getText().isBlank()
-                && !(cmbCategoria.getSelectedIndex() == -1) && !txtYear.getText().isBlank()
-                && !txtMonth.getText().isBlank() && !txtDay.getText().isBlank()){
+
+        if (purpose.equals(Purpose.SAVE)) {
+
+            if (!txtId.getText().isBlank() && !txtTitulo.getText().isBlank()
+                    && !txtAutor.getText().isBlank() && !txtPrecio.getText().isBlank()
+                    && !(cmbCategoria.getSelectedIndex() == -1) && !txtYear.getText().isBlank()
+                    && !txtMonth.getText().isBlank() && !txtDay.getText().isBlank()) {
+
+                long id = Long.parseLong(txtId.getText());
+                String titulo = txtTitulo.getText();
+                String autor = txtAutor.getText();
+                double precio = Double.parseDouble(txtPrecio.getText());
+                CategoriasLibro categoria = (CategoriasLibro) cmbCategoria.getSelectedItem();
+                String fecha = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
+                LocalDate fechaPublicacion = LocalDate.parse(fecha);
+
+                //crear un objeto libro
+                Libro libro = new Libro(id, titulo, autor, precio, categoria, fechaPublicacion);
+
+                libroRepo.save(libro);
+
+                JOptionPane.showMessageDialog(null, "Guardado exitoso");
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Hay informacion sin rellenar");
+            }
+
+        }
+        
+        if(purpose.equals(Purpose.UPDATE)){
             
-            long id = Long.parseLong(txtId.getText());
-            String titulo = txtTitulo.getText();
-            String autor = txtAutor.getText();
-            double precio = Double.parseDouble(txtPrecio.getText());
-            CategoriasLibro categoria = (CategoriasLibro)cmbCategoria.getSelectedItem();
-            String fecha = txtYear.getText()+"-"+txtMonth.getText()+"-"+txtDay.getText();
-            LocalDate fechaPublicacion = LocalDate.parse(fecha);
             
-            //crear un objeto libro
-            Libro libro = new Libro(id, titulo, autor, precio, categoria, fechaPublicacion);
             
-            libroRepo.save(libro);
             
-            JOptionPane.showMessageDialog(null, "Guardado exitoso");
-            this.dispose();
+            
+            
             
         }else{
-            JOptionPane.showMessageDialog(null, "Hay informacion sin rellenar");
+            
         }
+        
+        
+        
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
