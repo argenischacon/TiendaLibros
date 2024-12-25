@@ -2,9 +2,12 @@
 package logica;
 
 import java.util.List;
+import persistencia.ControladoraPersistencia;
 
 
 public class LibroRepository implements GenericRepository<Libro>{
+    
+    private ControladoraPersistencia controlPersis = new ControladoraPersistencia();
 
     @Override
     public void save(Libro entitiy) {
@@ -28,7 +31,7 @@ public class LibroRepository implements GenericRepository<Libro>{
 
     @Override
     public List<Libro> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return controlPersis.findAll();
     }
     
 }

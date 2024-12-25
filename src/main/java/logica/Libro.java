@@ -1,26 +1,32 @@
 
 package logica;
 
-import java.util.Date;
+import java.io.Serializable;
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
 @Entity
-public class Libro {
+public class Libro implements Serializable {
     @Id
     private long id;
     private String titulo;
     private String autor;
     private double precio;
-    @Column(name = "cat_libro")
+    @Column(name = "categoria_lib")
+    //Se mapea el nombre de las contantes de manera literal
+    @Enumerated(EnumType.STRING)
     private CategoriasLibro categoria;
-    private Date fechaPublicacion;
+    //Solo para manejar una fecha (sin hora)
+    private LocalDate fechaPublicacion;
 
     public Libro() {
     }
 
-    public Libro(long id, String titulo, String autor, double precio, CategoriasLibro categoria, Date fechaPublicacion) {
+    public Libro(long id, String titulo, String autor, double precio, CategoriasLibro categoria, LocalDate fechaPublicacion) {
         this.id = id;
         this.titulo = titulo;
         this.autor = autor;
@@ -69,13 +75,15 @@ public class Libro {
         this.categoria = categoria;
     }
 
-    public Date getFechaPublicacion() {
+    public LocalDate getFechaPublicacion() {
         return fechaPublicacion;
     }
 
-    public void setFechaPublicacion(Date fechaPublicacion) {
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
+
+
     
   
 }

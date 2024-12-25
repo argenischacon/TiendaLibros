@@ -1,14 +1,19 @@
 
 package gui;
 
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
+import logica.Libro;
+import logica.LibroRepository;
 
 
 public class LibroList extends javax.swing.JFrame {
     
     private DefaultTableModel modelTabla;
+    private LibroRepository librorepo;
     
     public LibroList() {
+        librorepo = new LibroRepository();
         modelTabla = new DefaultTableModel();
         cargarModeloTabla();
         initComponents();
@@ -109,6 +114,11 @@ public class LibroList extends javax.swing.JFrame {
         modelTabla.setColumnIdentifiers(new Object[] {"id", "titulo", "autor",
         "precio", "categoria", "fechaPublicacion"});
         //Cargar datos al modelo (proveniente de la base de datos)
+        List<Libro> libros = librorepo.findAll();
         
+        for(Libro l: libros){
+            modelTabla.addRow(new Object [] {l.getId(), l.getTitulo(), l.getAutor(), 
+            l.getPrecio(), l.getCategoria().getNombre(), l.getFechaPublicacion()});
+        }
     }
 }

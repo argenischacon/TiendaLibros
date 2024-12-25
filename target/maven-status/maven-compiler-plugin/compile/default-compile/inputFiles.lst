@@ -1,2 +1,11 @@
 C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\com\mycompany\tiendalibros\TiendaLibros.java
 C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\gui\LibroList.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\logica\CategoriasLibro.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\logica\GenericRepository.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\logica\Libro.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\logica\LibroRepository.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\persistencia\ControladoraPersistencia.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\persistencia\exceptions\IllegalOrphanException.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\persistencia\exceptions\NonexistentEntityException.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\persistencia\exceptions\PreexistingEntityException.java
+C:\Users\Argenis\Documents\NetBeansProjects\TiendaLibros\src\main\java\persistencia\LibroJpaController.java
