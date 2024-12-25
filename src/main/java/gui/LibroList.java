@@ -10,6 +10,7 @@ public class LibroList extends javax.swing.JFrame {
     
     public LibroList() {
         modelTabla = new DefaultTableModel();
+        cargarModeloTabla();
         initComponents();
     }
 
@@ -29,17 +30,7 @@ public class LibroList extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tblLibros.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {},
-                {},
-                {},
-                {}
-            },
-            new String [] {
-
-            }
-        ));
+        tblLibros.setModel(modelTabla);
         jScrollPane1.setViewportView(tblLibros);
 
         btnAgregarLIbro.setPreferredSize(new java.awt.Dimension(73, 73));
@@ -113,4 +104,11 @@ public class LibroList extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblLibros;
     // End of variables declaration//GEN-END:variables
+
+    private void cargarModeloTabla() {
+        modelTabla.setColumnIdentifiers(new Object[] {"id", "titulo", "autor",
+        "precio", "categoria", "fechaPublicacion"});
+        //Cargar datos al modelo (proveniente de la base de datos)
+        
+    }
 }
