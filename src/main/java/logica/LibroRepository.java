@@ -11,7 +11,7 @@ public class LibroRepository implements GenericRepository<Libro>{
 
     @Override
     public void save(Libro entitiy) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        controlPersis.save(entitiy);
     }
 
     @Override
