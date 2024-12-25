@@ -2,13 +2,18 @@
 package logica;
 
 import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-
+@Entity
 public class Libro {
+    @Id
     private long id;
     private String titulo;
     private String autor;
     private double precio;
+    @Column(name = "cat_libro")
     private CategoriasLibro categoria;
     private Date fechaPublicacion;
 
