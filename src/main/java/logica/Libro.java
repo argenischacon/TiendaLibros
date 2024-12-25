@@ -72,8 +72,5 @@ public class Libro {
         this.fechaPublicacion = fechaPublicacion;
     }
     
-    
-    
-    
-    
+  
 }
