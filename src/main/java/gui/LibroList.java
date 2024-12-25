@@ -39,6 +39,11 @@ public class LibroList extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblLibros);
 
         btnAgregarLIbro.setPreferredSize(new java.awt.Dimension(73, 73));
+        btnAgregarLIbro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarLIbroActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setPreferredSize(new java.awt.Dimension(73, 73));
 
@@ -97,6 +102,10 @@ public class LibroList extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAgregarLIbroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLIbroActionPerformed
+        
+    }//GEN-LAST:event_btnAgregarLIbroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
