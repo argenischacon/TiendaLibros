@@ -1,11 +1,13 @@
 logica\CategoriasLibro.class
-gui\LibroList.class
+gui\LibroForm.class
 persistencia\LibroJpaController.class
+gui\LibroList$1.class
+logica\LibroRepository.class
+logica\Libro.class
+gui\LibroList.class
 logica\GenericRepository.class
 com\mycompany\tiendalibros\TiendaLibros.class
-logica\LibroRepository.class
 persistencia\exceptions\NonexistentEntityException.class
-logica\Libro.class
 persistencia\exceptions\PreexistingEntityException.class
 persistencia\ControladoraPersistencia.class
 persistencia\exceptions\IllegalOrphanException.class

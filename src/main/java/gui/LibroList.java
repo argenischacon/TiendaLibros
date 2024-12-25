@@ -104,6 +104,9 @@ public class LibroList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarLIbroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLIbroActionPerformed
+        LibroForm libroform = new LibroForm(this, true);
+        libroform.setLocationRelativeTo(this);
+        libroform.setVisible(true);
         
     }//GEN-LAST:event_btnAgregarLIbroActionPerformed
 
