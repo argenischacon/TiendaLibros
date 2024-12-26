@@ -60,7 +60,7 @@ public class LibroList extends javax.swing.JFrame {
         });
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png"))); // NOI18N
-        btnEliminar.setToolTipText("Editar libro");
+        btnEliminar.setToolTipText("Eliminar libro");
         btnEliminar.setPreferredSize(new java.awt.Dimension(73, 73));
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
