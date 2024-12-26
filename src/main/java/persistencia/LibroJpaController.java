@@ -54,7 +54,7 @@ public class LibroJpaController implements Serializable {
     public List<Libro> findAllLibros() {
         EntityManager em = getEntityManager();
         try {
-            TypedQuery<Libro> query = em.createQuery("SELECT l FROM Libro l", Libro.class);
+            TypedQuery<Libro> query = em.createQuery("SELECT l FROM Libro l ORDER BY l.id ASC", Libro.class);
             return query.getResultList();
         } finally {
             em.close();
