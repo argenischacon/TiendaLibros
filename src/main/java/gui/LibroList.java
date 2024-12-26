@@ -1,6 +1,8 @@
 
 package gui;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -58,6 +60,11 @@ public class LibroList extends javax.swing.JFrame {
 
         btnEliminar.setToolTipText("Editar libro");
         btnEliminar.setPreferredSize(new java.awt.Dimension(73, 73));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -117,6 +124,12 @@ public class LibroList extends javax.swing.JFrame {
         LibroForm libroform = new LibroForm(this, true, Purpose.SAVE);
         libroform.setLocationRelativeTo(this);
         libroform.setVisible(true);
+        libroform.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                cargarModeloTabla();
+            }
+        });
         
     }//GEN-LAST:event_btnAgregarLIbroActionPerformed
 
@@ -129,6 +142,13 @@ public class LibroList extends javax.swing.JFrame {
         LibroForm libroForm = new LibroForm(this, true, Purpose.UPDATE, idLibro);
         libroForm.setLocationRelativeTo(this);
         libroForm.setVisible(true);
+        libroForm.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                cargarModeloTabla();
+            }
+            
+        });
             
         }else{
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
@@ -136,6 +156,18 @@ public class LibroList extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        if(tblLibros.getSelectedRow() != -1){
+            int opcion = JOptionPane.showConfirmDialog(this, "Desea eliminar este libro?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+            if(opcion == JOptionPane.YES_OPTION){
+            long idLibro =(Long)tblLibros.getValueAt(tblLibros.getSelectedRow(), 0);
+            librorepo.delete(librorepo.findById(idLibro));
+            JOptionPane.showMessageDialog(this, "Libro eliminado");
+            cargarModeloTabla();
+            }
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -150,6 +182,7 @@ public class LibroList extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void cargarModeloTabla() {
+        modelTabla.setRowCount(0);
         modelTabla.setColumnIdentifiers(new Object[] {"id", "titulo", "autor",
         "precio", "categoria", "fechaPublicacion"});
         //Cargar datos al modelo (proveniente de la base de datos)

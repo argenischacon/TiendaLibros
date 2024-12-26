@@ -23,11 +23,7 @@ public class LibroForm extends javax.swing.JDialog {
         this.purpose = purpose;
         modeloCategorias = new DefaultComboBoxModel<>();
         libroRepo = new LibroRepository();
-        if (purpose.equals(Purpose.UPDATE)) {
-            //Traer el libro de la base de datos
-            //this.libro = libroRepo.findById(libro.getId()); 
-            //cargarInformacion()   
-        }
+
         initComponents();
     }
 
@@ -264,6 +260,7 @@ public class LibroForm extends javax.swing.JDialog {
                     
                     if(opcion == JOptionPane.YES_OPTION){
                     //crear un objeto libro
+                    
                     Libro libro = new Libro(id, titulo, autor, precio, categoria, fechaPublicacion);
                     
                     //actualizamos el libro

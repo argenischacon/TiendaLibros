@@ -21,7 +21,7 @@ public class LibroRepository implements GenericRepository<Libro>{
 
     @Override
     public void delete(Libro entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        controlPersis.delete(entity);
     }
 
     @Override

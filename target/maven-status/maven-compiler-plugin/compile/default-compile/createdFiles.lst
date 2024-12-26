@@ -3,14 +3,17 @@ gui\LibroList$2.class
 logica\Purpose.class
 gui\LibroForm.class
 persistencia\LibroJpaController.class
+gui\LibroList$3.class
 gui\LibroForm$1.class
 gui\LibroList$1.class
 logica\LibroRepository.class
 logica\Libro.class
 gui\LibroList.class
+gui\LibroList$5.class
 logica\GenericRepository.class
 com\mycompany\tiendalibros\TiendaLibros.class
 persistencia\exceptions\NonexistentEntityException.class
+gui\LibroList$4.class
 persistencia\exceptions\PreexistingEntityException.class
 persistencia\ControladoraPersistencia.class
 gui\LibroForm$2.class
