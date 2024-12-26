@@ -1,4 +1,6 @@
 logica\CategoriasLibro.class
+gui\LibroList$2.class
+logica\Purpose.class
 gui\LibroForm.class
 persistencia\LibroJpaController.class
 gui\LibroForm$1.class

@@ -16,7 +16,7 @@ public class LibroRepository implements GenericRepository<Libro>{
 
     @Override
     public void update(Libro entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        controlPersis.update(entity);
     }
 
     @Override
@@ -26,7 +26,7 @@ public class LibroRepository implements GenericRepository<Libro>{
 
     @Override
     public Libro findById(long id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return controlPersis.findByID(id);
     }
 
     @Override

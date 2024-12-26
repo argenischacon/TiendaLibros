@@ -2,9 +2,11 @@
 package gui;
 
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import logica.Libro;
 import logica.LibroRepository;
+import logica.Purpose;
 
 
 public class LibroList extends javax.swing.JFrame {
@@ -28,8 +30,8 @@ public class LibroList extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLibros = new javax.swing.JTable();
         btnAgregarLIbro = new javax.swing.JButton();
+        btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnactualizar = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
 
@@ -38,6 +40,7 @@ public class LibroList extends javax.swing.JFrame {
         tblLibros.setModel(modelTabla);
         jScrollPane1.setViewportView(tblLibros);
 
+        btnAgregarLIbro.setToolTipText("Guardar libro");
         btnAgregarLIbro.setPreferredSize(new java.awt.Dimension(73, 73));
         btnAgregarLIbro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -45,9 +48,16 @@ public class LibroList extends javax.swing.JFrame {
             }
         });
 
-        btnEliminar.setPreferredSize(new java.awt.Dimension(73, 73));
+        btnEditar.setToolTipText("Editar libro");
+        btnEditar.setPreferredSize(new java.awt.Dimension(73, 73));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
-        btnactualizar.setPreferredSize(new java.awt.Dimension(73, 73));
+        btnEliminar.setToolTipText("Editar libro");
+        btnEliminar.setPreferredSize(new java.awt.Dimension(73, 73));
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -66,8 +76,8 @@ public class LibroList extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregarLIbro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnactualizar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(14, 14, 14))
         );
         jPanel1Layout.setVerticalGroup(
@@ -82,9 +92,9 @@ public class LibroList extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAgregarLIbro, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnactualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 436, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(30, 30, 30))
         );
@@ -104,17 +114,34 @@ public class LibroList extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarLIbroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarLIbroActionPerformed
-        LibroForm libroform = new LibroForm(this, true);
+        LibroForm libroform = new LibroForm(this, true, Purpose.SAVE);
         libroform.setLocationRelativeTo(this);
         libroform.setVisible(true);
         
     }//GEN-LAST:event_btnAgregarLIbroActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        //Verificar que una fila haya sido seleccionada
+        if(tblLibros.getSelectedRow() != -1){
+        //obtener el id del libro
+        long idLibro = (Long)tblLibros.getValueAt(tblLibros.getSelectedRow(), 0);
+        //crear LibroForm
+        LibroForm libroForm = new LibroForm(this, true, Purpose.UPDATE, idLibro);
+        libroForm.setLocationRelativeTo(this);
+        libroForm.setVisible(true);
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
+                    
+        }
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarLIbro;
+    private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnactualizar;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

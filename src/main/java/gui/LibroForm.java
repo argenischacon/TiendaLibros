@@ -1,6 +1,7 @@
 package gui;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.DefaultComboBoxModel;
@@ -15,13 +16,29 @@ public class LibroForm extends javax.swing.JDialog {
     DefaultComboBoxModel<CategoriasLibro> modeloCategorias;
     LibroRepository libroRepo;
     private Purpose purpose;
+    private Libro libro;
 
     public LibroForm(java.awt.Frame parent, boolean modal, Purpose purpose) {
         super(parent, modal);
         this.purpose = purpose;
         modeloCategorias = new DefaultComboBoxModel<>();
         libroRepo = new LibroRepository();
+        if (purpose.equals(Purpose.UPDATE)) {
+            //Traer el libro de la base de datos
+            //this.libro = libroRepo.findById(libro.getId()); 
+            //cargarInformacion()   
+        }
         initComponents();
+    }
+
+    public LibroForm(java.awt.Frame parent, boolean modal, Purpose purpose, long idLibro) {
+        super(parent, modal);
+        this.purpose = purpose;
+        modeloCategorias = new DefaultComboBoxModel<>();
+        libroRepo = new LibroRepository();
+        this.libro = libroRepo.findById(idLibro);
+        initComponents();
+        cargarInformacion();
     }
 
     @SuppressWarnings("unchecked")
@@ -224,21 +241,48 @@ public class LibroForm extends javax.swing.JDialog {
             }
 
         }
-        
-        if(purpose.equals(Purpose.UPDATE)){
-            
-            
-            
-            
-            
-            
-            
-        }else{
-            
+
+        if (purpose.equals(Purpose.UPDATE)) {
+
+            if (isChanged(libro)) {
+
+                if (!txtId.getText().isBlank() && !txtTitulo.getText().isBlank()
+                        && !txtAutor.getText().isBlank() && !txtPrecio.getText().isBlank()
+                        && !(cmbCategoria.getSelectedIndex() == -1) && !txtYear.getText().isBlank()
+                        && !txtMonth.getText().isBlank() && !txtDay.getText().isBlank()) {
+
+                    long id = Long.parseLong(txtId.getText());
+                    String titulo = txtTitulo.getText();
+                    String autor = txtAutor.getText();
+                    double precio = Double.parseDouble(txtPrecio.getText());
+                    CategoriasLibro categoria = (CategoriasLibro) cmbCategoria.getSelectedItem();
+                    String fecha = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+                    LocalDate fechaPublicacion = LocalDate.parse(fecha, formatter);
+
+                    int opcion =JOptionPane.showConfirmDialog(null, "Desea actualizar los datos?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+                    
+                    if(opcion == JOptionPane.YES_OPTION){
+                    //crear un objeto libro
+                    Libro libro = new Libro(id, titulo, autor, precio, categoria, fechaPublicacion);
+                    
+                    //actualizamos el libro
+                    libroRepo.update(libro);
+
+                    JOptionPane.showMessageDialog(null, "Actualizacion exitosa");
+                    this.dispose();
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Hay informacion sin rellenar");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No se ha hecho ningun cambio");
+            }
+
         }
-        
-        
-        
+
     }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -268,4 +312,36 @@ public class LibroForm extends javax.swing.JDialog {
     private javax.swing.JTextField txtTitulo;
     private javax.swing.JTextField txtYear;
     // End of variables declaration//GEN-END:variables
+
+    private boolean isChanged(Libro libro) {
+        long id = Long.parseLong(txtId.getText());
+        String titulo = txtTitulo.getText();
+        String autor = txtAutor.getText();
+        double precio = Double.parseDouble(txtPrecio.getText());
+        CategoriasLibro categoria = (CategoriasLibro) cmbCategoria.getSelectedItem();
+        String fecha = txtYear.getText() + "-" + txtMonth.getText() + "-" + txtDay.getText();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate fechaPublicacion = LocalDate.parse(fecha, formatter);
+
+        if (id != libro.getId() || !titulo.equals(libro.getTitulo()) || !autor.equals(libro.getAutor())
+                || precio != libro.getPrecio() || !categoria.equals(libro.getCategoria())
+                || !fechaPublicacion.equals(libro.getFechaPublicacion())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private void cargarInformacion() {
+        
+        txtId.setText(String.valueOf(libro.getId()));
+        txtTitulo.setText(libro.getTitulo());
+        txtAutor.setText(libro.getAutor());
+        txtPrecio.setText(String.valueOf(libro.getPrecio()));
+        cmbCategoria.setSelectedItem(libro.getCategoria());
+        txtYear.setText(String.valueOf(libro.getFechaPublicacion().getYear()));
+        txtMonth.setText(String.valueOf(libro.getFechaPublicacion().getMonthValue()));
+        txtDay.setText(String.valueOf(libro.getFechaPublicacion().getDayOfMonth()));
+
+    }
 }
