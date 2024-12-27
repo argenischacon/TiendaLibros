@@ -33,5 +33,9 @@ public class LibroRepository implements GenericRepository<Libro>{
     public List<Libro> findAll() {
         return controlPersis.findAll();
     }
+
+    public List<Libro> findByCriteria(String criterio) {
+        return controlPersis.findByCriteria(criterio);
+    }
     
 }

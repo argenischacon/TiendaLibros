@@ -1,4 +1,3 @@
-
 package gui;
 
 import java.awt.event.WindowAdapter;
@@ -10,37 +9,41 @@ import logica.Libro;
 import logica.LibroRepository;
 import logica.Purpose;
 
-
 public class LibroList extends javax.swing.JFrame {
-    
+
     private DefaultTableModel modelTabla;
     private LibroRepository librorepo;
-    
+
     public LibroList() {
         librorepo = new LibroRepository();
-        modelTabla = new DefaultTableModel(){
+
+        modelTabla = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
-      
+
             }
-        
+
         };
         cargarModeloTabla();
         initComponents();
     }
 
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblLibros = new javax.swing.JTable();
         btnAgregarLIbro = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
+        txtBuscador = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("TiendaLibros");
@@ -75,24 +78,44 @@ public class LibroList extends javax.swing.JFrame {
             }
         });
 
+        txtBuscador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscadorKeyReleased(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setText("Buscador");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregarLIbro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAgregarLIbro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 576, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(112, Short.MAX_VALUE)
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txtBuscador, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnAgregarLIbro, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,69 +151,87 @@ public class LibroList extends javax.swing.JFrame {
                 cargarModeloTabla();
             }
         });
-        
+
     }//GEN-LAST:event_btnAgregarLIbroActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         //Verificar que una fila haya sido seleccionada
-        if(tblLibros.getSelectedRow() != -1){
-        //obtener el id del libro
-        long idLibro = (Long)tblLibros.getValueAt(tblLibros.getSelectedRow(), 0);
-        //crear LibroForm
-        LibroForm libroForm = new LibroForm(this, true, Purpose.UPDATE, idLibro);
-        libroForm.setLocationRelativeTo(this);
-        libroForm.setVisible(true);
-        libroForm.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosed(WindowEvent e) {
-                cargarModeloTabla();
-            }
-            
-        });
-            
-        }else{
+        if (tblLibros.getSelectedRow() != -1) {
+            //obtener el id del libro
+            long idLibro = (Long) tblLibros.getValueAt(tblLibros.getSelectedRow(), 0);
+            //crear LibroForm
+            LibroForm libroForm = new LibroForm(this, true, Purpose.UPDATE, idLibro);
+            libroForm.setLocationRelativeTo(this);
+            libroForm.setVisible(true);
+            libroForm.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent e) {
+                    cargarModeloTabla();
+                }
+
+            });
+
+        } else {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado ninguna fila");
-                    
+
         }
-        
+
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        if(tblLibros.getSelectedRow() != -1){
+        if (tblLibros.getSelectedRow() != -1) {
             int opcion = JOptionPane.showConfirmDialog(this, "Desea eliminar este libro?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
-            if(opcion == JOptionPane.YES_OPTION){
-            long idLibro =(Long)tblLibros.getValueAt(tblLibros.getSelectedRow(), 0);
-            librorepo.delete(librorepo.findById(idLibro));
-            JOptionPane.showMessageDialog(this, "Libro eliminado");
-            cargarModeloTabla();
+            if (opcion == JOptionPane.YES_OPTION) {
+                long idLibro = (Long) tblLibros.getValueAt(tblLibros.getSelectedRow(), 0);
+                librorepo.delete(librorepo.findById(idLibro));
+                JOptionPane.showMessageDialog(this, "Libro eliminado");
+                cargarModeloTabla();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No se ha seleccionado ninguna fila");
         }
-            
-            
+
+
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBuscadorKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscadorKeyReleased
+        String criterio = txtBuscador.getText();
+        List<Libro> librosPorCriterio = librorepo.findByCriteria(criterio);
+        actualizarTabla(librosPorCriterio);
+    }//GEN-LAST:event_txtBuscadorKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarLIbro;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTable tblLibros;
+    private javax.swing.JTextField txtBuscador;
     // End of variables declaration//GEN-END:variables
 
     private void cargarModeloTabla() {
         modelTabla.setRowCount(0);
-        modelTabla.setColumnIdentifiers(new Object[] {"id", "titulo", "autor",
-        "precio", "categoria", "fechaPublicacion"});
+        modelTabla.setColumnIdentifiers(new Object[]{"id", "titulo", "autor",
+            "precio", "categoria", "fechaPublicacion"});
         //Cargar datos al modelo (proveniente de la base de datos)
         List<Libro> libros = librorepo.findAll();
-        
-        for(Libro l: libros){
-            modelTabla.addRow(new Object [] {l.getId(), l.getTitulo(), l.getAutor(), 
-            l.getPrecio(), l.getCategoria().getNombre(), l.getFechaPublicacion()});
+
+        for (Libro l : libros) {
+            modelTabla.addRow(new Object[]{l.getId(), l.getTitulo(), l.getAutor(),
+                l.getPrecio(), l.getCategoria().getNombre(), l.getFechaPublicacion()});
+        }
+    }
+
+    private void actualizarTabla(List<Libro> librosPorCriterio) {
+        modelTabla.setRowCount(0);
+
+        for (Libro l : librosPorCriterio) {
+            modelTabla.addRow(new Object[]{l.getId(), l.getTitulo(), l.getAutor(),
+                l.getPrecio(), l.getCategoria().getNombre(), l.getFechaPublicacion()});
         }
     }
 }

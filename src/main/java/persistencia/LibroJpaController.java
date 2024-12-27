@@ -60,6 +60,22 @@ public class LibroJpaController implements Serializable {
             em.close();
         }
     }
+    
+    public List<Libro> findByCriteria(String criterio){
+        EntityManager em = getEntityManager();
+        try{
+            TypedQuery<Libro> query = em.createQuery("SELECT l FROM Libro l WHERE LOWER(l.autor) LIKE LOWER(:criterio) "
+                    + "OR LOWER(l.titulo) LIKE LOWER(:criterio) "
+                    + "OR LOWER(l.categoria) LIKE LOWER(:criterio) ORDER BY l.id ASC", Libro.class);
+            query.setParameter("criterio", "%"+criterio+"%");
+            return query.getResultList();
+        }finally{
+           em.close();
+        }
+    }
+    
+    
+    
 
     // Actualizar un libro existente
     public void edit(Libro libro) {

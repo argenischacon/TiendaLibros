@@ -27,5 +27,9 @@ public class ControladoraPersistencia {
     public void delete(Libro entity) {
         libroJpaCon.delete(entity.getId());
     }
+
+    public List<Libro> findByCriteria(String criterio) {
+        return libroJpaCon.findByCriteria(criterio);
+    }
     
 }
