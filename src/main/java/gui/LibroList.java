@@ -18,7 +18,14 @@ public class LibroList extends javax.swing.JFrame {
     
     public LibroList() {
         librorepo = new LibroRepository();
-        modelTabla = new DefaultTableModel();
+        modelTabla = new DefaultTableModel(){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+      
+            }
+        
+        };
         cargarModeloTabla();
         initComponents();
     }
